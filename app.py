@@ -21,7 +21,7 @@ color = os.environ.get('APP_COLOR') or random.choice(["red","green"])
 #color = os.environ.get('APP_COLOR') or random.choice(["white"])
 #color = os.environ.get('APP_COLOR') or random.choice(["pink","blue","yellow"])
 
-@app.route("/projects/color-app/templates")
+@app.route("/")
 def main():
     #return 'Hello'
     print(color)
