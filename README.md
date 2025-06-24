@@ -1,72 +1,64 @@
-📁 1. Project Structure
-Make sure your project directory looks like this:
+# Flask Color Application - Docker Setup
 
-perl
-Copy
-Edit
-my-flask-app/
-├── app.py                # ← your Flask code
-├── requirements.txt      # ← dependencies
-├── Dockerfile            # ← for Docker build
-├── templates/
-│   └── hello.html        # ← Flask template file
-└── data/
-    └── testfile.txt      # ← for /read_file route
-📜 2. Create requirements.txt
-List dependencies used in your script:
+This is a simple Flask application that displays different colored backgrounds and shows the hostname. The application can be easily containerized using Docker.
 
-txt
-Copy
-Edit
-Flask==2.3.3
-Add any other packages if needed.
+## Files Created
 
-🐳 3. Create a Dockerfile
-Dockerfile
-Copy
-Edit
-# Use an official Python image
-FROM python:3.11-slim
+- `Dockerfile` - Container configuration
+- `requirements.txt` - Python dependencies
+- `app.py` - Flask application code
+- `templates/hello.html` - HTML template
+- `.dockerignore` - Files to exclude from Docker build
+- `docker-compose.yml` - Container orchestration
 
-# Set the working directory
-WORKDIR /app
+## Building and Running
 
-# Copy application files
-COPY . .
+### Option 1: Using Docker directly
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Expose Flask port
-EXPOSE 8080
-
-# Run the Flask app
-CMD ["python", "app.py"]
-🏗️ 4. Build the Docker Image
-Open a terminal in the my-flask-app directory:
-
-bash
-Copy
-Edit
+```bash
+# Build the image
 docker build -t flask-color-app .
-🚀 5. Run the Container
-bash
-Copy
-Edit
-docker run -p 8080:8080 -v $(pwd)/data:/data flask-color-app
-You can also set environment variables:
 
-bash
-Copy
-Edit
-docker run -p 8080:8080 -e APP_COLOR=blue -v $(pwd)/data:/data flask-color-app
-🧪 6. Access the App
-Visit http://localhost:8080 in your browser.
+# Run the container
+docker run -p 8080:8080 flask-color-app
 
-You can try:
+# Run with custom color
+docker run -p 8080:8080 -e APP_COLOR=red flask-color-app
+```
 
-/ → shows a random or preset color
+### Option 2: Using Docker Compose
 
-/color/red → switches to red
+```bash
+# Build and run
+docker-compose up --build
 
-/read_file → shows contents of testfile.txt
+# Run in background
+docker-compose up -d
+
+# Stop
+docker-compose down
+```
+
+## Application Features
+
+- **Home page** (`/`) - Shows hostname with random color background
+- **Color routes** (`/color/<color>`) - Set specific background colors
+- **File reading** (`/read_file`) - Displays contents of a test file
+
+## Environment Variables
+
+- `APP_COLOR` - Set background color (red, green, blue, pink, yellow, white, purple)
+
+## Accessing the Application
+
+Once running, visit: http://localhost:8080
+
+## Available Colors
+
+- Red: http://localhost:8080/color/red
+- Blue: http://localhost:8080/color/blue
+- Green: http://localhost:8080/color/green
+- Pink: http://localhost:8080/color/pink
+- Yellow: http://localhost:8080/color/yellow
+- White: http://localhost:8080/color/white
+- Purple: http://localhost:8080/color/purple
